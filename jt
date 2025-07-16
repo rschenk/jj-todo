@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+
+new_todo() {
+    local msg="- [ ] $1"
+
+    # Check to see if there is currently a description set
+    # Capture both stdout and stderr, and the exit code
+    jj_output=$(jj show -T 'if(description, description, "(no description set)")' --no-patch --no-pager --ignore-working-copy 2>&1)
+    jj_exit_code=$?
+
+    # If `jj show` errors, print the error to stderr and exit with error code
+    if [[ $jj_exit_code -ne 0 ]]; then
+        echo "$jj_output" >&2
+        exit $jj_exit_code
+    fi
+
+    if [[ "$jj_output" == "(no description set)" ]]; then
+        echo "$msg" | jj describe --stdin
+    else
+        jj new --quiet && echo "$msg" | jj describe --stdin
+    fi
+}
+
+toggle_todo() {
+    # Capture both stdout and stderr, and the exit code
+    jj_output=$(jj show -T 'description' --no-patch --no-pager --ignore-working-copy 2>&1)
+    jj_exit_code=$?
+
+    # Branch on the outcome
+    if [[ $jj_exit_code -ne 0 ]]; then
+        # Error case - print the error to stderr and exit with error code
+        echo "$jj_output" >&2
+        exit $jj_exit_code
+    elif [[ "$jj_output" == "- [ ]"* ]]; then
+        # Replace "- [ ]" with "- [x]" and keep everything after it
+        echo "${jj_output/- \[ \]/- [x]}" | jj describe --stdin
+    elif [[ "$jj_output" == "- [x]"* ]]; then
+        # Replace "- [x]" with "- [ ]" and keep everything after it
+        echo "${jj_output/- \[x\]/- [ ]}" | jj describe --stdin
+    else
+        # All other conditions, do nothing
+        :
+    fi
+}
+
+log_todos() {
+    local flags="$*"
+
+    empty='if(self.empty(), label("log commit empty","○"), " ")'
+    conflict='if(self.conflict(), label("log commit conflict", "✖"), "")'
+    template="self.change_id().shortest(3) ++ ' ' ++ $empty ++ $conflict ++ ' ' ++ self.description().first_line()"
+
+    jj log -T "$template" --no-pager $flags
+}
+
+show_help() {
+    local command="$1"
+
+    case "$command" in
+        "new"|"n")
+            cat << EOF
+Makes a change with the provided description preceeded by "- [ ] "
+If the current jj change has a description, creates a new change after the current one.
+If the current jj change has no description, sets the description to the message you provide.
+
+Examples:
+  jt new do the things
+  # if the current change has a description,
+  # equivalent to jj new -m "- [ ] do the things"
+
+  jt new do the things
+  # if the current change has NO description,
+  # equivalent to jj describe -m "- [ ] do the things"
+
+Quickly blast out a todo list:
+  jt n fix the bug
+  jt n update the tests
+  jt n touch up docs
+
+Insert a todo before another:
+  jj new --before xyz
+  jt n oops forgot that thing
+EOF
+            ;;
+        "toggle"|"t")
+            cat << EOF
+Toggles a todo item done by changing "- [ ]" to "- [x]" (and vice versa)
+
+It will only alter the description if it starts with "- [ ]" or "- [x]".
+All other descriptions will be unaltered/ignored.
+
+Examples:
+  jt log
+  ○  tqs ○ - [ ] fix event handler
+  @  rws   - [ ] ui matches mockup
+  ○  mmy   - [x] update validations
+
+  jt t
+  jt log
+  ○  tqs ○ - [ ] fix event handler
+  @  rws   - [x] ui matches mockup
+  ○  mmy   - [x] update validations
+EOF
+            ;;
+        "log"|"l")
+            cat << EOF
+A wrapper for \`jj log\` with a more streamlined template.
+Any args you pass will be forwarded along to \`jj log\`.
+
+Examples:
+  jt log
+  jt log --reversed --limit 10
+EOF
+            ;;
+        *)
+            cat << EOF
+jj-todo, a todo list wrapper for jj-vcs
+
+Usage: jt <COMMAND>
+
+Commands:
+  new, n        Create a new todo item
+  toggle, t     Toggle a todo item done or not
+  log, l        Show jj log in a compact, list-friendly format
+  help          Show this help message
+
+Options:
+  --help        Show this help message
+
+Examples:
+  jt new this is my todo item
+  jt n this is my todo item
+  jt toggle
+  jt t
+  jt log
+  jt l --reversed --limit 10
+
+For detailed help on a specific command:
+  jt help <command>
+EOF
+            ;;
+    esac
+}
+
+# Main argument parsing logic
+if [ $# -eq 0 ]; then
+    show_help
+    exit 1
+fi
+
+case "$1" in
+    "new"|"n")
+        # Capture everything after the first argument as the message
+        shift
+        msg="$*"
+        if [ -z "$msg" ]; then
+            echo "Error: new command requires a message"
+            exit 1
+        fi
+        new_todo "$msg"
+        ;;
+    "toggle"|"t")
+        toggle_todo
+        ;;
+    "log"|"l")
+        # Capture all arguments after the command as flags
+        shift
+        log_todos "$@"
+        ;;
+    "help"|"--help")
+        show_help "$2"
+        ;;
+    *)
+        echo "Error: Unknown command '$1'"
+        echo "Use 'jt help' or 'jt --help' for usage information"
+        exit 1
+        ;;
+esac
