@@ -2,6 +2,8 @@
 
 A todo-list wrapper for [jj-vcs](https://github.com/jj-vcs/jj)
 
+<img src="/Users/rschenk/Code/jj-todo/docs/screenshot.png" alt="screenshot" style="zoom:50%;" />
+
 ## Motivation
 
 jj is a fantastic version control system which I've been happily using for some time. After using the [squash workflow](https://steveklabnik.github.io/jujutsu-tutorial/real-world-workflows/the-squash-workflow.html), I realized I could make a bunch of temporary changes after the described change and use it like a todo list, then squash them down when I was finished.
@@ -19,7 +21,7 @@ I find really granular todo lists helpful for keeping myself on track, so I migh
   - [ ] schema
   - [ ] changeset
   - [ ] boundary functions
- 
+
 With `jj-todo` I can manage this todo list right in `jj` as I work, without having to jump into some other todo list app. I will check off the todo items until I'm all done and ready to squash them all down into the "real" change.
 
 I will quickly introduce the commands and then walk you through an example.
