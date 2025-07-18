@@ -19,18 +19,22 @@ I find really granular todo lists helpful for keeping myself on track, so I migh
   - [ ] schema
   - [ ] changeset
   - [ ] boundary functions
+ 
+With `jj-todo` I can manage this todo list right in jj as I work, without having to jump into some other todo list system. The jj changes I make will check off the todo items until I'm all done and ready to squash them all down into the "real" change.
 
-### `jt new` to make new todos
+I will quickly introduce the commands and then walk you through an example.
+
+### `jt new` makes new todo changes
 
 `jt new` is a wrapper for `jj new` and `jj describe` to make todo-style changes quickly. It takes whatever you pass to it, appends `"- [ ] "` to it, and creates a new change.
 
-### `jt log` to view todos
+### `jt log` views todos
 
 `jt log` is a wrapper for `jj log` with a custom template to make clean a clean todo list. Any arguments you pass to it will be passed along to `jj log`. 
 
-### `jt toggle` to toggle a todo item done or not
+### `jt toggle` toggles a todo item done or not
 
-`jt toggle` is a wrapper for `jj describe` that changes `"- [ ]"` to `"- [x]"` and back again. Do not underestimate the power of that dopamine hit when you complete a todo, and the motivation factor when you see your todo list being checked off.
+`jt toggle` is a wrapper for `jj describe` that changes `"- [ ]"` to `"- [x]"` and back again. Yes, all it does is alter the message by one character. Do not underestimate the power of that dopamine hit when you complete a todo, and the motivation factor when you see your todo list being checked off.
 
 ### Let's make some todos
 
