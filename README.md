@@ -48,6 +48,7 @@ $ jj new -m "Create Post schema backend"
 
 # Now let's quickly make some todo items
 $ jt new migration
+# "n" is an alias for new
 $ jt n schema
 $ jt n changeset
 $ jt n boundary functions
@@ -61,14 +62,9 @@ $ jt log
 ○  zwv ○ Create Post schema backend
 ◆  zzz ○
 
-# If we want, we could also create the other change and todos but I'll skip that for brevity
-#
-# Let's get to work instead on the migration
+# Let's get to work on the migration
 $ jj edit r
-Working copy  (@) now at: rnxoxyxq 7574136f (empty) - [ ] migration
-
-# Make a migration
-$ echo 'create table("posts")' >migration.exs
+$ touch migration.example
 
 # Nice work, let's mark that done!
 $ jt toggle
@@ -83,13 +79,20 @@ $ jt l
 
 # Do some more work...
 $ jj edit n
-$ echo 'schema("posts")' >posts/post.ex
-$ jt t # "t" is an alias for toggle
-$ jj edit k
-$ echo 'def changeset(%Post{}, attrs)' >>posts/post.ex
+$ touch schema.example
+# "t" is an alias for toggle
 $ jt t
+$ jt l
+○  mwm ○ - [ ] boundary functions
+○  kzp ○ - [ ] changeset
+○  nkz ○ - [x] schema
+@  rnx   - [x] migration
+○  zwv ○ Create Post schema backend
+◆  zzz ○
 
-# Such productivity!
+$ jj edit k
+$ touch changeset.example
+$ jt t
 $ jt l
 ○  mwm ○ - [ ] boundary functions
 @  kzp   - [x] changeset
@@ -98,9 +101,9 @@ $ jt l
 ○  zwv ○ Create Post schema backend
 ◆  zzz ○
 
-# Let's finish up...
+# Such productivity! Let's finish up...
 $ jj edit m
-$ echo 'def list_posts()' >posts.ex
+$ touch boundary.example
 $ jt t
 $ jt l
 @  mwm   - [x] boundary functions
