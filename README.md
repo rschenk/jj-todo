@@ -10,9 +10,9 @@ Todo lists work best when you can check items off, and see how much stuff you've
 
 ## Contrived Example
 
-For sake of a contrived example, let's add a post to a hypothetical blog engine. And again, for the sake of argument, the commit I want to eventually make is, "Create Post schema backend".
+For sake of a contrived example, let's add a post to a hypothetical blog engine. And again, for the sake of argument, the change I want to eventually make is, "Create Post schema backend".
 
-I find really granular todo lists helpful for keeping myself on track, so I might make the following todo lists for each of those commits:
+I find really granular todo lists helpful for keeping myself on track, so I might make the following todo lists for each of those chages:
 
 * Create Post schema backend
   - [ ] migration
@@ -20,7 +20,7 @@ I find really granular todo lists helpful for keeping myself on track, so I migh
   - [ ] changeset
   - [ ] boundary functions
  
-With `jj-todo` I can manage this todo list right in jj as I work, without having to jump into some other todo list system. The jj changes I make will check off the todo items until I'm all done and ready to squash them all down into the "real" change.
+With `jj-todo` I can manage this todo list right in `jj` as I work, without having to jump into some other todo list app. I will check off the todo items until I'm all done and ready to squash them all down into the "real" change.
 
 I will quickly introduce the commands and then walk you through an example.
 
