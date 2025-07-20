@@ -18,6 +18,10 @@ Todo lists work best when they are:
 
 jj-todo gives you some simple wrappers around `jj new`, `jj desc`, and `jj log` to make todo-lists integrated right into your usual vcs workflow, check them off as you complete them, then squash them down when you finish all the items.
 
+## Installation
+
+This is just a bash script. Download `jt` and `chmod +x`. It is simply a wrapper for `jj` commands with a halfway decent cli.
+
 ## Workflow
 
 This readme will describe the commands, but I've written a [guide](docs/guide.md) for how I use this! Take a skim through the docs below so you know what the commands do, then head over to the guide. 
