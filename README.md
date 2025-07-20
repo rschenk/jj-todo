@@ -6,124 +6,21 @@ A todo-list wrapper for [jj-vcs](https://github.com/jj-vcs/jj)
 
 ## Motivation
 
-jj is a fantastic version control system which I've been happily using for some time. After using the [squash workflow](https://steveklabnik.github.io/jujutsu-tutorial/real-world-workflows/the-squash-workflow.html), I realized I could make a bunch of temporary changes after the described change and use it like a todo list, then squash them down when I was finished.
+jj is a fantastic version control system which I've been happily using for some time. After using the [squash workflow](https://steveklabnik.github.io/jujutsu-tutorial/real-world-workflows/the-squash-workflow.html), I realized I could create a bunch of temporary changes after the described change and use it like a todo list, then squash them down when I was finished.
 
-Todo lists work best when you can check items off, and see how much stuff you've accomplished, and this simple wrapper bash script hooks into those motivating qualities to make the workflow even better!
+Todo lists work best when they are:
 
-## Contrived Example
+- [x] Quick to make
+- [x] Granular
+- [x] Give you a dopamine hit when you check an item off
+- [x] Keep motivation going by letting you see your progress
+- [x] Don't require context switching
 
-For sake of a contrived example, let's add a post to a hypothetical blog engine. And again, for the sake of argument, the change I want to eventually make is, "Create Post schema backend".
+jj-todo gives you some simple wrappers around `jj new`, `jj desc`, and `jj log` to make todo-lists integrated right into your usual vcs workflow, check them off as you complete them, then squash them down when you finish all the items.
 
-I find really granular todo lists helpful for keeping myself on track, so I might make the following todo lists for each of those chages:
+## Workflow
 
-* Create Post schema backend
-  - [ ] migration
-  - [ ] schema
-  - [ ] changeset
-  - [ ] boundary functions
-
-With `jj-todo` I can manage this todo list right in `jj` as I work, without having to jump into some other todo list app. I will check off the todo items until I'm all done and ready to squash them all down into the "real" change.
-
-I will quickly introduce the commands and then walk you through an example.
-
-### `jt new` makes new todo changes
-
-`jt new` is a wrapper for `jj new` and `jj describe` to make todo-style changes quickly. It takes whatever you pass to it, appends `"- [ ] "` to it, and creates a new change.
-
-### `jt log` views todos
-
-`jt log` is a wrapper for `jj log` with a custom template to make clean a clean todo list. Any arguments you pass to it will be passed along to `jj log`. 
-
-### `jt toggle` toggles a todo item done or not
-
-`jt toggle` is a wrapper for `jj describe` that changes `"- [ ]"` to `"- [x]"` and back again. Yes, all it does is alter the message by one character. Do not underestimate the power of that dopamine hit when you complete a todo, and the motivation factor when you see your todo list being checked off.
-
-### Let's make some todos
-
-Here's a how you'd put it all together in a terminal, with some of the output truncated
-
-```shell
-# First let's make the "real" change
-$ jj new -m "Create Post schema backend"
-
-# Now let's quickly make some todo items
-$ jt new migration
-# "n" is an alias for new
-$ jt n schema
-$ jt n changeset
-$ jt n boundary functions
-
-# Let's see the todo list so far
-$ jt log
-@  mwm ○ - [ ] boundary functions
-○  kzp ○ - [ ] changeset
-○  nkz ○ - [ ] schema
-○  rnx ○ - [ ] migration
-○  zwv ○ Create Post schema backend
-◆  zzz ○
-
-# Let's get to work on the migration
-$ jj edit r
-$ touch migration.example
-
-# Nice work, let's mark that done!
-$ jt toggle
-# And check our progress... "l" is an alias for log
-$ jt l
-○  mwm ○ - [ ] boundary functions
-○  kzp ○ - [ ] changeset
-○  nkz ○ - [ ] schema
-@  rnx   - [x] migration
-○  zwv ○ Create Post schema backend
-◆  zzz ○
-
-# Do some more work...
-$ jj edit n
-$ touch schema.example
-# "t" is an alias for toggle
-$ jt t
-$ jt l
-○  mwm ○ - [ ] boundary functions
-○  kzp ○ - [ ] changeset
-○  nkz ○ - [x] schema
-@  rnx   - [x] migration
-○  zwv ○ Create Post schema backend
-◆  zzz ○
-
-$ jj edit k
-$ touch changeset.example
-$ jt t
-$ jt l
-○  mwm ○ - [ ] boundary functions
-@  kzp   - [x] changeset
-○  nkz   - [x] schema
-○  rnx   - [x] migration
-○  zwv ○ Create Post schema backend
-◆  zzz ○
-
-# Such productivity! Let's finish up...
-$ jj edit m
-$ touch boundary.example
-$ jt t
-$ jt l
-@  mwm   - [x] boundary functions
-○  kzp   - [x] changeset
-○  nkz   - [x] schema
-○  rnx   - [x] migration
-○  zwv ○ Create Post schema backend
-◆  zzz ○
-
-# And squash!
-$ jj squash --from zw..m --into zw
-
-# Et voila
-$ jj log
-@  pylmzuxk rschenk 2025-07-17 20:47:46 8a484fc9
-│  (empty) (no description set)
-○  zwvyouou rschenk 2025-07-17 20:47:43 70d74463
-│  Create Post schema backend
-◆  zzzzzzzz root() 00000000
-```
+This readme will describe the commands, but I've written a [guide](docs/guide.md) for how I use this! Take a skim through the docs below so you know what the commands do, then head over to the guide. 
 
 ## Documentation
 
