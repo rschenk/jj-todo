@@ -1,10 +1,10 @@
 # Workflow Guide 
 
-For sake of a contrived example, let's add a post feature to a hypothetical blog engine. And again, for the sake of argument, the change/commit I want to eventually make is, "Create Post schema backend".
+For sake of a contrived example, let's add a post feature to a hypothetical blog engine. And again, for the sake of argument, the change/commit I want to eventually make is, "Create Post backend".
 
 I find really granular todo lists helpful for keeping myself on track, so I might make the following todo lists for each of those chages:
 
-* Create Post schema backend
+* Create Post backend
   - [ ] make a database migration
   - [ ] write a model file
   - [ ] validations
