@@ -22,7 +22,7 @@ jj-todo gives you some simple wrappers around `jj new`, `jj desc`, and `jj log` 
 
 This is just a bash script. Download `jt` and `chmod +x`. It is simply a wrapper for `jj` commands with a halfway decent cli.
 
-## Workflow
+## Usage
 
 This readme will describe the commands, but I've written a [guide](docs/guide.md) for how I use this! Take a skim through the docs below so you know what the commands do, then head over to the guide. 
 
