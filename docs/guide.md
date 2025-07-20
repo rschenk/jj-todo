@@ -86,7 +86,7 @@ Nice work! Let's mark that item done with `jt toggle` (alias `jt t`)...
 ```command
 $ jt toggle
 Rebased 3 descendant commits
-Working copy  (@) now at: uyuyplzq b6048002 (empty) - [x] db migration
+Working copy  (@) now at: uyuyplzq b6048002  - [x] db migration
 Parent commit (@-)      : wllrxoyu 70156d73 (empty) Create Post backend
 ```
 
@@ -173,7 +173,7 @@ Awesome, now we can resume where we left off with our tests
 ```command
 $ jj edit l
 Working copy  (@) now at: lxzkqksr 2bd93608 (empty) - [ ] tests
-Parent commit (@-)      : nvqmorwt 1ca94b13 (empty) - [x] validations
+Parent commit (@-)      : nvqmorwt 1ca94b13 - [x] validations
 
 $ touch test.example
 $ jt t
