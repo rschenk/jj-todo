@@ -2,7 +2,7 @@
 
 A todo-list wrapper for [jj-vcs](https://github.com/jj-vcs/jj)
 
-![screenshot of jt log](docs/screenshot.png "screenshot of jt log")
+![screenshot of jt log](docs/screenshot@2x.png "screenshot of jt log")
 
 ## Motivation
 
