@@ -35,10 +35,10 @@ The output below is truncated for clarity, but `jt new` has the same output as `
 
 ```command
 # Now let's quickly make some todo items
-~/D/jj-todo-demo jt new db migration
-~/D/jj-todo-demo jt new model
-~/D/jj-todo-demo jt new validations
-~/D/jj-todo-demo jt new tests
+$ jt new db migration
+$ jt new model
+$ jt new validations
+$ jt new tests
 ```
 
 Now let's see them! You could just use `jj log` but, `jt log` (alias `jt l`) provides a much more compact, list-friendly output with just the essentials:
